@@ -1,23 +1,28 @@
 <template>
   <div class="card">
-    <editor
-        api-key="oi6onp3p8vvf58edi8nd2jfrzjyuvzzruktd92voonnvjtsp"
-        v-model="clonedTitle"
-        :init="{
-         menubar: false,
-         toolbar: '',
-         inline: true
-       }"/>
+    <div class="card-title">
+      <editor id="test"
+            api-key="oi6onp3p8vvf58edi8nd2jfrzjyuvzzruktd92voonnvjtsp"
+            v-model="clonedTitle"
+            :init="{
+             menubar: false,
+             toolbar: '',
+             inline: true
+            }"
+      />
+    </div>
     <img alt="" class="card-img" src="https://via.placeholder.com/600/92c952">
-    <editor
-        api-key="oi6onp3p8vvf58edi8nd2jfrzjyuvzzruktd92voonnvjtsp"
-        v-model="clonedBody"
-        :init="{
-         menubar: false,
-         toolbar: '',
-         inline: true
-       }"/>
-    <button class="card-btn">Курсив</button>
+    <div class="card-body">
+      <editor
+          api-key="oi6onp3p8vvf58edi8nd2jfrzjyuvzzruktd92voonnvjtsp"
+          v-model="clonedBody"
+          :init="{
+           menubar: false,
+           toolbar: '',
+           inline: true
+         }"/>
+    </div>
+    <button class="card-btn" @click="switchItalic">Курсив</button>
   </div>
 </template>
 
@@ -50,6 +55,11 @@ export default {
     this.clonedTitle = this.title
     this.clonedBody = this.body
   },
+  methods: {
+    switchItalic() {
+      window.tinymce.execCommand('italic')
+    }
+  }
 }
 </script>
 

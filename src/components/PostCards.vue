@@ -22,7 +22,7 @@ export default {
     }
   },
   created() {
-    this.loopAddPost(1)
+    this.loopAddPost(3)
   },
   methods: {
     loopAddPost(count) {
