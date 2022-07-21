@@ -1,28 +1,26 @@
 <template>
   <div class="card">
-    <div class="card-title">
-      <editor id="test"
-            api-key="oi6onp3p8vvf58edi8nd2jfrzjyuvzzruktd92voonnvjtsp"
-            v-model="clonedTitle"
-            :init="{
-             menubar: false,
-             toolbar: '',
-             inline: true
-            }"
+    <div class="card-title" @mouseup="emitSelect" ref="titleEditor">
+      <editor api-key="oi6onp3p8vvf58edi8nd2jfrzjyuvzzruktd92voonnvjtsp"
+                  v-model="clonedTitle"
+                  :init="{
+                     menubar: false,
+                     toolbar: '',
+                     inline: true
+                  }"
       />
     </div>
     <img alt="" class="card-img" src="https://via.placeholder.com/600/92c952">
-    <div class="card-body">
-      <editor
-          api-key="oi6onp3p8vvf58edi8nd2jfrzjyuvzzruktd92voonnvjtsp"
-          v-model="clonedBody"
-          :init="{
-           menubar: false,
-           toolbar: '',
-           inline: true
-         }"/>
+    <div class="card-body" @mouseup="emitSelect" ref="bodyEditor">
+      <editor api-key="oi6onp3p8vvf58edi8nd2jfrzjyuvzzruktd92voonnvjtsp"
+                  v-model="clonedBody"
+                  :init="{
+                     menubar: false,
+                     toolbar: '',
+                     inline: true
+                  }"
+      />
     </div>
-    <button class="card-btn" @click="switchItalic">Курсив</button>
   </div>
 </template>
 
@@ -36,6 +34,10 @@ export default {
     Editor
   },
   props: {
+    postId: {
+      type: Number,
+      default: null
+    },
     title: {
       type: String,
       default: ''
@@ -56,8 +58,9 @@ export default {
     this.clonedBody = this.body
   },
   methods: {
-    switchItalic() {
-      window.tinymce.execCommand('italic')
+    emitSelect(event) {
+      if (this.$refs.titleEditor.contains(event.target) || this.$refs.bodyEditor.contains(event.target))
+        if(window.getSelection().type === 'Range') this.$emit('text-select', window.tinymce.activeEditor.selection)
     }
   }
 }
@@ -85,19 +88,5 @@ export default {
 
 .card-body {
   font-size: 18px;
-}
-
-.card-btn {
-  background: #fff;
-  color: #bbb;
-  border: 1px solid #bbbbbb;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.card-btn:hover {
-  background: #bbb;
-  color: #fff;
 }
 </style>
